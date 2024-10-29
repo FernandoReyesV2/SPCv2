@@ -1,0 +1,207 @@
+:root {
+    --blanco-perla: #FBFCF8;
+    --gris: #E5ECE9;
+    --naranja-oscuro: #D33A1A; /* Le faltaba el "#" en la declaración de color */
+    --texto: #3e3e3e;
+    --naranja: #ff5900;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helveticas Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #333;
+}
+
+.imagen-navbar {
+    position: relative; /* Necesario para el posicionamiento absoluto */
+    height: 56px; /* Altura igual a la del navbar */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde */
+}
+
+.hero {
+    position: absolute; /* Posiciona la imagen de fondo */
+    top: 0; /* Alinea la parte superior de la imagen con la parte superior del contenedor */
+    left: 50%; /* Alinea horizontalmente al centro */
+    width: 100%; /* Mantiene la proporción de la imagen */
+    height: auto; /* Mantiene la altura de la imagen según su proporción */
+    transform: translateX(-50%); /* Centra la imagen en el contenedor */
+}
+
+/*CONTENEDOR PRINCIPAL*/
+.contenedor-principal {
+    display: flex; /* Cambia a inline-flex para que ocupe solo el espacio del contenido */
+    gap: 0;
+    margin: 0; /* Asegúrate de que no haya margen adicional */
+}
+
+/* CONTENEDOR CATEGORÍAS */
+.contenedor-categorias {
+    background-color: var(--blanco-perla);
+    width: 15rem;
+    border-top-left-radius: 10px; /* Bordes redondeados en la parte superior izquierda */
+    border-bottom-left-radius: 10px; /* Bordes redondeados en la parte inferior izquierda */
+    margin: 2rem 0 0 2rem; /* Combina márgenes superior e izquierdo */
+    text-align: center;
+    min-height: 85vh;
+    box-shadow: -4px 0px 8px rgba(0, 0, 0, 0.2); /* Sombra en todos los lados menos el derecho */
+}
+
+/*titulo*/
+.categorias {
+    color: #3e3e3e;
+    padding-top: 10px;
+    margin: 0;
+}
+
+/* SELECT OPTION */
+.contenedor-categorias select {
+    width: 80%;
+    font-size: 15px;
+    padding: 5px;
+    background-color: var(--gris);
+    border-radius: 15px;
+    border-color: var(--gris);
+    margin-top: 10px;
+    color: #3e3e3e;
+    font-weight: bold;
+    height: 40px;
+}
+
+.contenedor-categorias select:hover {
+    background-color: var(--blanco-perla); /* Cambia de color al pasar el mouse */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+
+
+}
+
+.contenedor-categorias select:focus {
+    background-color: var(--blanco-perla); /* Cambia el fondo cuando tiene el foco */
+    box-shadow: var(--gris);
+}
+
+/*BOTON SIGUIENTE*/
+.siguiente{
+    width: 80%;
+    border-width: 0;
+    font-size: 17px;
+    padding: 5px;
+    background-color: var(--naranja);
+    color: white;
+    border-radius: 15px;
+    border-color: var(--naranja);
+    font-weight: bold;
+    height: 40px;
+}
+
+.siguiente:hover {
+    background-color: var(--naranja-oscuro); /* Asegúrate de definir var(--naranja-oscuro) */
+    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.37);*/
+    border-color: var(--naranja-oscuro);
+}
+
+/*option*/
+.contenedor-categorias select option {
+    background-color: #f9f9f9; /* Color de fondo de las opciones */
+    color: #333; /* Color del texto de las opciones */
+}
+
+.contenedor-categorias #camaras_resolucion {
+    margin-bottom: 20px;
+}
+
+/* VISTA CUADRÍCULA - GALERÍA */
+.galeria-imagenes {
+    background-color: var(--gris);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr)); /* Automático */
+    gap: 2rem;
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    justify-items: center;
+    box-shadow: 4px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.imagen-camara {
+    background-color: white;
+    border-radius: 10px; /* Bordes redondeados */
+    overflow: hidden; /* Evita que el contenido se desborde */
+    display: flex; /* Utiliza Flexbox para el diseño */
+    flex-direction: column; /* Coloca la imagen y el texto en columna */
+    align-items: center; /* Alinea los elementos en el centro */
+    justify-content: center; /* Asegura que el contenido esté centrado verticalmente */
+    width: 20rem;
+    height: 22rem;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.imagen-camara img {
+    width: 12rem; /* Ajusta el tamaño de la imagen */
+    height: 12rem; /* Mantiene la proporción de la imagen */
+    border-radius: 5px; /* Redondea las esquinas de la imagen (opcional) */
+    margin-bottom: 8px; /* Espacio entre la imagen y el texto */
+}
+
+.galeria-imagenes p {
+    font-size: 20px; /* Tamaño de fuente */
+    margin: 2px 0; /* Espaciado entre párrafos */
+    padding: 2px; /* Espaciado interno */
+    text-align: left; /* Alinea el texto a la izquierda */
+    width: 100%; /* Asegúrate de que el párrafo ocupe todo el ancho disponible */
+    margin-left: 2rem; /* Ajusta este valor según sea necesario */
+
+}
+
+.nombre-camara {
+    color: dodgerblue;
+}
+
+.precio-camara {
+    color: var(--texto); /* Cambia el color si es necesario */
+}
+
+.contenedor-contador {
+    display: flex; /* Usa flexbox para alinear los elementos en una fila */
+    align-items: center; /* Alinea verticalmente al centro */
+    justify-content: center; /* Centra los elementos horizontalmente en el contenedor */
+    margin: 10px 0; /* Añade margen superior e inferior según sea necesario */
+}
+
+.btn-agregar, .btn-eliminar {
+    width: 40px; /* Ancho fijo para los botones */
+    border-width: 0;
+    font-size: 20px;
+    padding: 5px;
+    background-color: var(--naranja);
+    color: white;
+    border-radius: 12px;
+    border-color: var(--naranja);
+    font-weight: bold;
+    height: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-agregar:hover, .btn-eliminar:hover {
+    background-color: var(--naranja-oscuro);
+    border-color: var(--naranja-oscuro);
+}
+
+/* Estilos para el contador */
+.contador {
+    font-size: 20px; /* Tamaño del texto del contador */
+    color: #3e3e3e; /* Color del texto */
+    margin: 0 10px; /* Espaciado horizontal */
+    padding: 5px 10px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: var(--gris); /* Fondo gris para el contador */
+    display: inline-block; /* Asegura que el contador se ajuste al contenido */
+    text-align: center; /* Centrar el texto dentro del contador */
+    min-width: 30px; /* Ancho mínimo para mantener la forma */
+}
+

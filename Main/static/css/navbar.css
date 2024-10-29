@@ -1,0 +1,79 @@
+:root {
+    --blanco-perla: #FBFCF8;
+    --gris: #E5ECE9;
+    --naranja-oscuro: #D33A1A; /* Le faltaba el "#" en la declaración de color */
+    --texto: #3e3e3e;
+    --naranja: #ff5900;
+}
+.navbar-background {
+    /*background-image: url('/static/images/navbar.jpg');*/
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Estilos para el navbar */
+.navbar {
+    list-style: none;
+    padding: 8px 20px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between; /* Separa izquierda de derecha */
+    align-items: center; /* Alinear elementos verticalmente */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo transparente */
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Alinear el icono y texto "SPC" */
+.navbar-left {
+    display: flex;
+    align-items: center; /* Alinear el icono y texto en una fila */
+}
+
+/* Contenedor de los enlaces de la derecha */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.navbar-right li {
+    margin-left: 20px; /* Espacio entre los enlaces */
+}
+
+/* Estilo para los enlaces */
+.navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.navbar a:hover {
+    color: var(--naranja); /* Cambiar color al hacer hover */
+}
+
+/* Alinear el icono y texto "SPC" */
+.navbar-left a {
+    display: flex;
+    align-items: center; /* Alinear verticalmente la imagen y el texto */
+    text-decoration: none; /* Elimina el subrayado en el enlace */
+}
+
+/* Ajustes para el icono */
+.navbar-icon {
+    width: 40px;
+    height: auto;
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+}
+
+/* Estilo para el título (SPC) */
+.navbar-title {
+    font-size: 24px;
+    margin: 0;
+    color: white; /* Asegúrate de que tenga el mismo color que los otros enlaces */
+}

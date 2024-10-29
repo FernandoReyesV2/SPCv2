@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámaras</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/camera.css' %}">
+</head>
+<body>
+<!-- Navbar -->
+{% include 'navbar.html' %}
+
+{# contendor#}
+<div class="contenedor-principal">
+    {# BARRA LATERAL CON CATEGORIAS #}
+    <div class="contenedor-categorias">
+        <h2 class="categorias"> CATEGORIAS </h2>
+        <div>
+            <select id="camaras_tipo" name="tipo">
+                <option value=""> 🟩 Tipo</option>
+                {% for categoria in categorias_tipo %}
+                    <option value="{{ categoria.0 }}">{{ categoria.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <select id="camaras_precio" name="precio">
+                <option value=""> 🟦 Precio</option>
+                {% for rango in rangos_precio %}
+                    <option value="{{ rango.0 }}-{{ rango.1 }}">{{ rango.0 }} a {{ rango.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <select id="camaras_marca" name="marca">
+                <option value=""> 🟨 Marca</option>
+                {% for categoria in categorias_marca %}
+                    <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <select id="camaras_resolucion" name="resolucion">
+                <option value="">🟧 Resolución</option>
+                {% for categoria in categorias_resolucion %}
+                    <option value="{{ categoria }}">{{ categoria }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {#        BOTON PARA ENVIAR LA CAMARA Y PASAR A LA VIEW DE PLANO#}
+        <button class="siguiente" id="siguiente"> Siguiente</button>
+
+    </div>
+
+    {# VISTA DE CUADRICULA CAMARAS #}
+    <div class="galeria-imagenes">
+        {% for camara in camaras %}
+            <div class="imagen-camara"
+                 data-id="{{ camara.id }}"
+                 data-tipo="{{ camara.tipo }}"
+                 data-precio="{{ camara.precio }}"
+                 data-marca="{{ camara.marca }}"
+                 data-resolucion="{{ camara.resolucion }}"
+                 data-angulo-vision="{{ camara.angulo_vision }}">
+                <img src="{{ camara.camara.url }}" alt="{{ camara.nombre }}">
+                <p class="nombre-camara">{{ camara.nombre }}</p>
+                <p class="precio-camara">Precio: {{ camara.precio }}</p>
+                <div class="contenedor-contador">
+                    <button class="btn-agregar" data-id="{{ camara.id }}">+</button>
+                    <span class="contador" id="contador-{{ camara.id }}">0</span>
+                    <button class="btn-eliminar" data-id="{{ camara.id }}">-</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="{% static 'js/camara.js' %}"></script>
+</body>
+</html>

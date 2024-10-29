@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<!-- Navbar -->
+{% include 'navbar.html' %}
+
+<!-- Sección de bienvenida -->
+<div class="hero-image">
+    <div class="hero-content">
+        <h1>
+            Bienvenido a <br>
+            <span>
+                Control Inteligente de <br> Posicionamiento de Cámaras
+            </span>
+        </h1>
+        <p>
+            Protege tu Hogar con seguridad y confianza
+        </p>
+        <button class="start-button" onclick="window.location.href='{% url 'camaras' %}'">Empecemos</button>
+    </div>
+    <img src="{% static 'images/background.jpg' %}" alt="Vigilancia" class="hero">
+</div>
+
+<!-- About Section -->
+<section id="about" class="about">
+    <h2>Acerca de Nosotros</h2>
+    <p>En la actualidad, la seguridad y el monitoreo son aspectos críticos para la protección de propiedades, bienes y, sobre todo, la seguridad de las personas. Las cámaras de vigilancia desempeñan un papel fundamental en este contexto, proporcionando una visión constante y vigilancia en tiempo real de áreas clave. Sin embargo, la efectividad de un sistema de videovigilancia depende en gran medida de la estratégica ubicación de las cámaras.</p>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <h2>Contacto</h2>
+    <p>Para más información sobre nuestros productos y servicios, por favor contáctanos a través de nuestros canales de soporte.</p>
+    <p>Email: contacto@seguridad.com</p>
+</section>
+</body>
+</html>

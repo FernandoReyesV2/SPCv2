@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+</head>
+<body>
+<!-- Main/templates/navbar.html -->
+<nav class="navbar-background">
+    <ul class="navbar">
+        <li class="navbar-left">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/camera_icon.png' %}" alt="Icono" class="navbar-icon">
+                <h2 class="navbar-title">SPC</h2>
+
+            </a>
+        </li>
+        <div class="navbar-right">
+            <li><a href="{% url 'home' %}#about">About</a></li>
+            <li><a href="{% url 'home' %}#contact">Contact</a></li>
+        </div>
+    </ul>
+</nav>
+    <div class="imagen-navbar">
+{#        <img src="{% static 'images/background.jpg' %}" alt="Vigilancia" class="hero">#}
+    </div>
+</body>
+</html>

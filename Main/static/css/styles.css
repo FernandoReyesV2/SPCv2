@@ -1,0 +1,100 @@
+/* Main/static/css/styles.css */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #333;
+}
+/* Full-width image */
+.hero-image {
+    overflow: hidden;
+    position: relative; /* Añadir esta línea */
+    display: flex; /* Añadir esta línea */
+    justify-content: center;
+}
+
+.hero {
+    width: 100vw; /* Cambiar a auto para evitar distorsión */
+    height: 90%; /* Mantiene la altura fija */
+    object-fit: contain; /* Mantiene la proporción sin distorsionar */
+    max-width: none; /* Evita el ajuste del ancho */
+}
+
+.hero-content {
+    position: absolute; /* Mantener posición absoluta */
+    bottom: 50%; /* Centrar verticalmente */
+    left: 2rem; /* Espacio desde el borde izquierdo */
+    transform: translateY(50%); /* Ajustar para centrar verticalmente */
+    text-align: left; /* Alinear texto a la izquierda */
+    color: white; /* Color del texto */
+    padding: 1rem; /* Espaciado interno para responsividad */
+}
+.hero-content h1 {
+    font-size: 2.5rem; /* Tamaño del título */
+    margin: 0; /* Eliminar margen */
+}
+
+.hero-content p {
+    font-size: 1.2rem; /* Tamaño del texto */
+    margin-top: 10px; /* Espaciado entre h1 y p */
+}
+
+.hero-content span {
+    color:#e93f1a;
+}
+.start-button {
+    background-color: #e93f1a; /* Fondo naranja */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 12px 24px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: 600; /* Fuente un poco más gruesa */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.3s; /* Efecto de transición */
+    margin-top: 20px; /* Espaciado entre el párrafo y el botón */
+}
+
+/* Efecto hover */
+.start-button:hover {
+    background-color: #d33a1a; /* Fondo naranja más oscuro en hover */
+    transform: scale(1.05); /* Ligera ampliación en hover */
+}
+
+/* About Section */
+.about {
+    padding: 50px;
+    text-align: center;
+}
+
+.about h2 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.about p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Contact Section */
+.contact {
+    padding: 50px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.contact h2 {
+    font-size: 2.5rem;
+}
+
+.contact p {
+    font-size: 1.2rem;
+    color: #777;
+}
