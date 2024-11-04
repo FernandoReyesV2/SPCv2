@@ -149,7 +149,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-.btn-continuar {
+.btn-siguiente{
     margin-top: 2rem;
     margin-bottom: 1.5rem; /* Más espacio entre el botón y la imagen */
     width: 100%;
@@ -165,7 +165,7 @@ body {
     height: 45px;
 }
 
-.btn-continuar:hover{
+.btn-siguiente:hover{
     background-color: var(--naranja-oscuro); /* Asegúrate de definir var(--naranja-oscuro) */
     border-color: var(--naranja-oscuro);
 }

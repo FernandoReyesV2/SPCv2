@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Camaras',
     'Planos',
+    'Posicionamiento',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +126,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'Main' / 'static',
     BASE_DIR / 'Camaras' / 'static',
     BASE_DIR / 'Planos' / 'static',
+    BASE_DIR / 'Posicionamiento' / 'static',
+
 ]
 
 

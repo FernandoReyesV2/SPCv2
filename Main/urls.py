@@ -10,6 +10,7 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('camaras/', include('Camaras.urls')),
     path('planos/', include('Planos.urls')),
+    path('posicionamiento/', include('Posicionamiento.urls')),
 ]
 
 if settings.DEBUG:  # Solo en modo desarrollo

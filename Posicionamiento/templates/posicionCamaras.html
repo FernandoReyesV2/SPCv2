@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <!-- Basic -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>SPC</title>
+    <link rel="stylesheet" href="{% static 'posicionCamaras.css' %}">
+
+</head>
+<body>
+<!-- Navbar -->
+{% include 'navbar.html' %}
+{#RESTO DEL BODY#}
+<div class="fondo">
+    <div>
+        <button onclick="imprimirImagen()" class="boton-imprimir">Imprimir Imagen</button>
+    </div>
+    <div class="contenedor_resultado">
+        <img src="{{ image_path }}" alt="Posición de Cámaras">
+{#        <img class="habitacion-seleccionada" src="{{ habitacion_image_path }}" alt="Habitación Seleccionada">#}
+    </div>
+</div>
+</body>
+<script>
+    function imprimirImagen() {
+        var imagenUrl = document.querySelector('.contenedor_resultado img').src;
+
+        // Abre una nueva ventana con la imagen
+        var ventana = window.open('', '_blank');
+        ventana.document.write('<html><head><title>Imprimir Imagen</title></head><body>');
+        ventana.document.write('<img src="' + imagenUrl + '" style="max-width: 100%;">');
+        ventana.document.write('</body></html>');
+        ventana.document.close();
+
+        // Añade un evento para imprimir automáticamente cuando la ventana se abre
+        ventana.addEventListener('load', function () {
+            ventana.print();
+        });
+    }
+</script>
+
+</html>
