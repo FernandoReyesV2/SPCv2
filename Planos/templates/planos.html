@@ -28,10 +28,10 @@
             <button type="submit" class="btn-reconocer" id="reconocer-habitaciones">Reconocer Habitaciones</button>
 
             <!-- SELECCION DE HABITACION -->
-            <select id="habitaciones-select" class="select-habitaciones">
+            <select id="habitaciones-select" class="select-habitaciones" onchange="mostrarImagenHabitacion()">
                 <option value="" disabled selected>Seleccionar habitación</option>
                 {% for habitacion in habitaciones_detectadas %}
-                    <option value="{{ habitacion }}">{{ habitacion|title }}</option>
+                    <option value="{{ habitacion|urlencode }}">{{ habitacion|title }}</option>
                 {% endfor %}
             </select>
             <!-- Botón para ejecutar el reconocimiento de números -->
@@ -56,5 +56,20 @@
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.1/tesseract.min.js"></script>
 <script src="{% static 'js/planos.js' %}"></script>
+<script>
+    function mostrarImagenHabitacion() {
+        const select = document.getElementById('habitaciones-select');
+        const selectedValue = select.value;
+        const imageContainer = document.getElementById('uploaded-image');
+
+        if (selectedValue) {
+            // Construir la ruta de la imagen basada en la selección
+            imageContainer.src = "{% static 'images/habitaciones/' %}" + selectedValue + ".png";
+            imageContainer.style.display = 'block';
+        } else {
+            imageContainer.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
