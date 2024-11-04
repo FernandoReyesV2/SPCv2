@@ -52,10 +52,11 @@ body {
     align-items: center;
 }
 
+.contenedor-panel form{
+    margin-top: 1rem;
+}
+
 .btn-imagen {
-    margin-top: 2rem;
-    margin-bottom: 1.5rem; /* Más espacio entre el botón y la imagen */
-    width: 80%;
     border-width: 0;
     font-size: 17px;
     padding: 10px; /* Ajusté el padding para mayor altura del botón */
@@ -74,22 +75,85 @@ body {
 
 .ejemplo {
     display: block;
-    margin: 0 auto;
     max-width: 100%; /* Ajusta el ancho máximo al contenedor */
     max-height: 150px; /* Limita la altura máxima de la imagen */
-    margin-bottom: 1.5rem; /* Espacio entre la imagen y el texto de sugerencia */
+    margin-top: 2rem;
 }
 
 .sugerencia {
-    margin-top: 1rem;
     font-size: 0.9rem;
     color: var(--texto);
+    margin: 0;
 }
 
+.select-habitaciones{
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    padding: 5px;
+    background-color: var(--gris);
+    border-radius: 15px;
+    border-color: var(--gris);
+    margin-top: 1.5rem;
+    color: #3e3e3e;
+    font-weight: bold;
+    height: 45px;
+}
+
+.select-habitaciones:hover{
+    background-color: var(--blanco-perla); /* Cambia de color al pasar el mouse */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.contenedor-inputs {
+    margin-top: 1rem;
+    display: flex; /* Usar flexbox para alinear los grupos de inputs */
+    justify-content: space-between; /* Espacio entre los grupos */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column; /* Colocar label y input uno encima del otro */
+    width: 45%;
+}
+
+.btn-reconocer{
+    width: 100%;
+    font-size: 15px;
+    padding: 5px;
+    background-color: var(--gris);
+    border-radius: 15px;
+    border-width: 0;
+    color: #3e3e3e;
+    font-weight: bold;
+    height: 45px;
+    margin-top: 1.5rem;
+    text-align: center;
+
+}
+
+.btn-reconocer:hover{
+    background-color: var(--blanco-perla); /* Cambia de color al pasar el mouse */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.input-altura {
+    width: 85%; /* Hacer que el input ocupe todo el ancho del grupo */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-anchura {
+    width: 85%; /* Hacer que el input ocupe todo el ancho del grupo */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 .btn-continuar {
     margin-top: 2rem;
     margin-bottom: 1.5rem; /* Más espacio entre el botón y la imagen */
-    width: 80%;
+    width: 100%;
     border-width: 0;
     font-size: 17px;
     padding: 10px; /* Ajusté el padding para mayor altura del botón */
@@ -99,28 +163,12 @@ body {
     border-color: var(--naranja);
     font-weight: bold;
     cursor: pointer;
+    height: 45px;
 }
 
 .btn-continuar:hover{
     background-color: var(--naranja-oscuro); /* Asegúrate de definir var(--naranja-oscuro) */
     border-color: var(--naranja-oscuro);
-}
-.contenedor-inputs {
-    display: flex; /* Usar flexbox para alinear los grupos de inputs */
-    justify-content: space-between; /* Espacio entre los grupos */
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column; /* Colocar label y input uno encima del otro */
-    width: 45%; /* Ajustar el ancho de cada grupo para que quepan en una línea */
-}
-
-.input-numero {
-    width: 100%; /* Hacer que el input ocupe todo el ancho del grupo */
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 .contenedor-plano {

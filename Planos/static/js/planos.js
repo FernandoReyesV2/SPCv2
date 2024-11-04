@@ -1,3 +1,4 @@
+// Asignar el evento al input de carga de archivos
 document.getElementById('file-upload').addEventListener('change', handleImageUpload);
 
 function handleImageUpload(event) {
@@ -16,72 +17,51 @@ function handleImageUpload(event) {
                 return;
             }
 
-            // Aplicar preprocesamiento a la imagen (escala de grises y escalado)
-            applyGrayscaleAndScale(img.src, 2).then(processedImageSrc => {
-                const uploadedImage = document.getElementById('uploaded-image');
-                uploadedImage.src = processedImageSrc;
-                uploadedImage.style.display = 'block';
-
-                console.log("Inicio de reconocimiento");
-
-                Tesseract.recognize(
-                    processedImageSrc,
-                    'eng',
-                    {
-                        logger: info => console.log(info),
-                        tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK // Cambiar a un modo de página adecuado
-                    }
-                ).then(({ data: { text } }) => {
-                    console.log('Texto reconocido:', text);
-                    console.log("Fin de reconocimiento");
-
-                    const recognizedNumbers = text.match(/\d+/g);
-                    console.log('Números reconocidos:', recognizedNumbers);
-
-                    if (recognizedNumbers) {
-                        document.getElementById('anchura').value = recognizedNumbers[0] || '';
-                        document.getElementById('altura').value = recognizedNumbers[1] || '';
-                    } else {
-                        document.getElementById('anchura').value = '';
-                        document.getElementById('altura').value = '';
-                    }
-                }).catch(error => {
-                    console.error('Error al reconocer la imagen:', error);
-                    console.log("Fin de reconocimiento");
-                });
-            });
+            // Mostrar la imagen subida
+            const uploadedImage = document.getElementById('uploaded-image');
+            uploadedImage.src = img.src;
+            uploadedImage.style.display = 'block';
         };
     };
 
     reader.readAsDataURL(file);
 }
 
-// Función para convertir la imagen a escala de grises y escalar
-function applyGrayscaleAndScale(src, scaleFactor) {
-    return new Promise((resolve) => {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        const imgElement = new Image();
-        imgElement.src = src;
+// Función para reconocer números
+function reconocerNumeros() {
+    const fileInput = document.getElementById('file-upload');
 
-        imgElement.onload = function() {
-            // Escalar la imagen
-            canvas.width = imgElement.width * scaleFactor;
-            canvas.height = imgElement.height * scaleFactor;
-            context.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
+    // Asegúrate de que hay un archivo cargado
+    if (fileInput.files.length > 0) {
+        handleImageUpload({ target: { files: [fileInput.files[0]] } });
 
-            // Convertir a escala de grises
-            for (let i = 0; i < data.length; i += 4) {
-                const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                data[i] = avg;     // Rojo
-                data[i + 1] = avg; // Verde
-                data[i + 2] = avg; // Azul
+        // Lógica de reconocimiento de números
+        const processedImageSrc = fileInput.files[0]; // Se debe asegurar que esto apunte a la imagen procesada
+        Tesseract.recognize(
+            processedImageSrc,
+            'eng',
+            {
+                logger: info => console.log(info),
+                tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK
             }
-
-            context.putImageData(imageData, 0, 0);
-            resolve(canvas.toDataURL()); // Devuelve la imagen en escala de grises
-        };
-    });
+        ).then(({ data: { text } }) => {
+            console.log('Texto reconocido:', text);
+            const recognizedNumbers = text.match(/\d+/g);
+            if (recognizedNumbers) {
+                document.getElementById('anchura').value = recognizedNumbers[0] || '';
+                document.getElementById('altura').value = recognizedNumbers[1] || '';
+            } else {
+                document.getElementById('anchura').value = '';
+                document.getElementById('altura').value = '';
+            }
+        }).catch(error => {
+            console.error('Error al reconocer la imagen:', error);
+        });
+    } else {
+        alert('Por favor, selecciona una imagen primero.');
+    }
 }
+
+// Asignar eventos a los botones
+document.getElementById('reconocer-numeros').addEventListener('click', reconocerNumeros);
+

@@ -17,22 +17,37 @@
 
 <section class="contenedor-principal">
     <div class="contenedor-panel">
-        <label for="file-upload" class="btn-imagen">Seleccionar imagen</label>
-        <input id="file-upload" type="file" name="image" accept="image/*" onchange="handleImageUpload(event)" style="display: none;">
-        <img src="{% static 'images/ejemplo.png' %}" alt="ejemplo" class="ejemplo">
-        <p class="sugerencia">*imagen sugerencia*</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file-upload" class="btn-imagen"> Seleccionar imagen </label>
+            <input id="file-upload" type="file" name="image" accept="image/*" onchange="handleImageUpload(event)"
+                   style="display: none;">
+            <img src="{% static 'images/ejemplo.png' %}" alt="ejemplo" class="ejemplo">
+            <p class="sugerencia">*imagen sugerencia*</p>
+            <!-- Botón para detectar habitaciones -->
+            <button type="submit" class="btn-reconocer" id="reconocer-habitaciones">Reconocer Habitaciones</button>
 
-        <div class="contenedor-inputs">
-            <div class="input-group">
-                <label for="altura">Altura</label>
-                <input type="number" id="altura" name="altura" class="input-numero"/>
+            <!-- SELECCION DE HABITACION -->
+            <select id="habitaciones-select" class="select-habitaciones">
+                <option value="" disabled selected>Seleccionar habitación</option>
+                {% for habitacion in habitaciones_detectadas %}
+                    <option value="{{ habitacion }}">{{ habitacion|title }}</option>
+                {% endfor %}
+            </select>
+            <!-- Botón para ejecutar el reconocimiento de números -->
+            <button type="button" class="btn-reconocer" id="reconocer-numeros">Reconocer de Números</button>
+            <!-- ALTURA  Y ANCHURA -->
+            <div class="contenedor-inputs">
+                <div class="input-group">
+                    <label for="altura">Altura</label>
+                    <input type="number" id="altura" name="altura" class="input-altura"/>
+                </div>
+                <div class="input-group">
+                    <label for="anchura">Anchura</label>
+                    <input type="number" id="anchura" name="anchura" class="input-anchura"/>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="anchura">Anchura</label>
-                <input type="number" id="anchura" name="anchura" class="input-numero"/>
-            </div>
-        </div>
-
+        </form>
         <button class="btn-continuar">Continuar</button>
     </div>
     <div class="contenedor-plano">
