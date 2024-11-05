@@ -33,3 +33,18 @@ document.getElementById('siguiente').addEventListener('click', function () {
     // Redirige a la nueva URL con los parámetros actualizados
     window.location.href = `/posicionamiento/?${params.toString()}`;
 });
+
+function mostrarImagenHabitacion() {
+    const select = document.getElementById('habitaciones-select');
+    const selectedValue = select.value;
+    const imageContainer = document.getElementById('uploaded-image');
+
+    if (selectedValue) {
+        // Construir la ruta de la imagen basada en la selección
+        imageContainer.src = `/static/images/habitaciones/${selectedValue}.png`;
+        console.log(imageContainer);
+        imageContainer.style.display = 'block';
+    } else {
+        imageContainer.style.display = 'none';
+    }
+}

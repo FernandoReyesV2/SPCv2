@@ -64,4 +64,3 @@ function reconocerNumeros() {
 
 // Asignar eventos a los botones
 document.getElementById('reconocer-numeros').addEventListener('click', reconocerNumeros);
-
