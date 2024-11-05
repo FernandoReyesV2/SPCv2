@@ -1,25 +1,35 @@
-    document.getElementById('siguiente').addEventListener('click', function() {
-        // Obtiene los valores de los campos de entrada
-        const altura = document.getElementById('altura').value;
-        const anchura = document.getElementById('anchura').value;
-        const habitacion = document.getElementById('habitaciones-select');
-        const habitacionValue = habitacion.value;
+document.getElementById('siguiente').addEventListener('click', function () {
+    // Obtiene los valores de los campos de entrada
+    const altura = document.getElementById('altura').value;
+    const anchura = document.getElementById('anchura').value;
+    const habitacion = document.getElementById('habitaciones-select');
+    const habitacionValue = habitacion.value;
 
-        // Obtiene los parámetros de la URL actual
-        const currentUrl = new URL(window.location.href);
-        const params = new URLSearchParams(currentUrl.search);
+    // Validaciones
+    if (!altura || altura.trim() === '') {
+        alert('Por favor, ingresa una altura válida.');
+        return; // Detiene la ejecución si la validación falla
+    }
 
-        // Mantén los valores actuales de la URL y agrega los nuevos valores de altura, anchura y habitación
-        if (altura) {
-            params.set('altura', altura);
-        }
-        if (anchura) {
-            params.set('anchura', anchura);
-        }
-        if (habitacionValue) {
-            params.set('habitacion', habitacionValue);
-        }
-        
-        // Redirige a la nueva URL con los parámetros actualizados
-        window.location.href = `/posicionamiento/?${params.toString()}`;
-    });
+    if (!anchura || anchura.trim() === '') {
+        alert('Por favor, ingresa una anchura válida.');
+        return; // Detiene la ejecución si la validación falla
+    }
+
+    if (!habitacionValue) {
+        alert('Por favor, selecciona una habitación.');
+        return; // Detiene la ejecución si la validación falla
+    }
+
+    // Obtiene los parámetros de la URL actual
+    const currentUrl = new URL(window.location.href);
+    const params = new URLSearchParams(currentUrl.search);
+
+    // Mantén los valores actuales de la URL y agrega los nuevos valores de altura, anchura y habitación
+    params.set('altura', altura);
+    params.set('anchura', anchura);
+    params.set('habitacion', habitacionValue);
+
+    // Redirige a la nueva URL con los parámetros actualizados
+    window.location.href = `/posicionamiento/?${params.toString()}`;
+});
