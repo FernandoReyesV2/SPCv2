@@ -16,13 +16,11 @@
 {% include 'navbar.html' %}
 {#RESTO DEL BODY#}
 <div class="fondo">
-    <div>
-        <button onclick="imprimirImagen()" class="boton-imprimir">Imprimir Imagen</button>
-    </div>
     <div class="contenedor_resultado">
         <img src="{{ image_path }}" alt="Posición de Cámaras">
-{#        <img class="habitacion-seleccionada" src="{{ habitacion_image_path }}" alt="Habitación Seleccionada">#}
     </div>
+    <button onclick="imprimirImagen()" class="btn-imprimir">Imprimir Imagen</button>
+
 </div>
 </body>
 <script>

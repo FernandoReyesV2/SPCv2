@@ -4,6 +4,7 @@ import matplotlib.patches as patches
 import os
 from django.conf import settings
 from datetime import datetime
+import matplotlib.image as mpimg
 
 def posicionCamaras(request):
     habitacion = request.GET.get('habitacion')
@@ -11,10 +12,14 @@ def posicionCamaras(request):
     altura = int(request.GET.get('altura', 0))  # Convertir a entero
     anchura = int(request.GET.get('anchura', 0))  # Convertir a entero
 
-    print(habitacion)
+    # Construcción de la URL de la imagen
+    habitacion_image_url = os.path.join('Planos\static\images\habitaciones', f'{habitacion}.png')
 
-    # Aquí generamos la ruta correcta para la imagen de la habitación
-    habitacion_image_path = f"{settings.STATIC_URL}images/habitaciones/{habitacion}.png"
+    # Verificar si el archivo existe
+    if os.path.exists(habitacion_image_url):
+        print("El archivo existe.", habitacion_image_url)
+    else:
+        print("El archivo no existe.", habitacion_image_url)
 
     #Angulo
     anguloVision = [float(a) for a in angulos.split(',')] if angulos != 'No especificado' else []
@@ -46,15 +51,24 @@ def posicionCamaras(request):
     # Pasa la ruta de la imagen como contexto a la función render
     context = {
         'image_path': os.path.join(settings.MEDIA_URL, 'grafico', image_filename),
-        'habitacion_image_path': habitacion_image_path  # Agregar la URL de la imagen de la habitación
     }
 
     # Configuracion del Grafico
+    fig, ax = plt.subplots()
+
+    # Mostrar la imagen como fondo
+    img = mpimg.imread(habitacion_image_url)  # Cargar la imagen
+    ax.imshow(img, extent=[0, medidas[0], 0, medidas[1]], aspect='auto')  # Establecer la imagen como fondo
+
+    # Ocultar los ejes
+    ax.axis('off')
+
+    # Graficar el cuadrilátero
     x, y = zip(*vertices_cuadrilatero)
     plt.plot(x + (x[0],), y + (y[0],), 'k-')
     plt.fill(x, y, alpha=0.2, color='gray')
 
-    plt.title('Posicion Optima Cámara')
+    # plt.title('Posicion Optima Cámara')
     plt.axis('equal')
 
     for angulo, color in zip(anguloVision, sector_colors):

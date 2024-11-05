@@ -28,22 +28,39 @@ body {
     height: auto; /* Mantiene la altura de la imagen según su proporción */
     transform: translateX(-50%); /* Centra la imagen en el contenedor */
 }
-
-.boton-imprimir {
-    font-weight: bold;
-    /*position: absolute;*/
-    top: 10px;
-    left: 10px;
-    padding: 10px 20px;
-    background: #9E9E9E;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 1rem;
+.fondo {
+    display: flex; /* Utiliza flexbox para facilitar la alineación */
+    flex-direction: column; /* Alinea los elementos en una columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    height: 100vh; /* Establece la altura del contenedor en el 100% de la ventana */
 }
 
-.boton-imprimir:hover {
-    background: #e0e0e0;
+.contenedor_resultado {
+    /* Opcional: Establece un ancho y alto para el contenedor de imagen */
+    max-width: 80%; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centra horizontalmente si el ancho es menor que el contenedor padre */
+}
+
+.contenedor_resultado img {
+    max-width: 100%; /* Asegúrate de que la imagen no exceda el ancho del contenedor */
+    height: auto; /* Mantiene la relación de aspecto */
+}
+
+
+.btn-imprimir {
+    border-width: 0;
+    font-size: 17px;
+    padding: 10px; /* Ajusté el padding para mayor altura del botón */
+    background-color: var(--naranja);
+    color: white;
+    border-radius: 15px;
+    border-color: var(--naranja);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-imprimir:hover{
+    background-color: var(--naranja-oscuro); /* Asegúrate de definir var(--naranja-oscuro) */
+    border-color: var(--naranja-oscuro);
 }
