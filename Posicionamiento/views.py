@@ -5,9 +5,10 @@ import os
 from django.conf import settings
 from datetime import datetime
 import matplotlib.image as mpimg
+from urllib.parse import unquote
 
 def posicionCamaras(request):
-    habitacion = request.GET.get('habitacion')
+    habitacion = unquote(request.GET.get('habitacion'))
     angulos = request.GET.get('angulos', 'No especificado')
     altura = int(request.GET.get('altura', 0))  # Convertir a entero
     anchura = int(request.GET.get('anchura', 0))  # Convertir a entero

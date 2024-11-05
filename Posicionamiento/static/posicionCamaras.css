@@ -28,18 +28,26 @@ body {
     height: auto; /* Mantiene la altura de la imagen según su proporción */
     transform: translateX(-50%); /* Centra la imagen en el contenedor */
 }
-.fondo {
+body {
+    margin: 0;
+    display: flex;              /* Habilita el uso de flexbox */
+    justify-content: center;    /* Centra horizontalmente */
+    align-items: center;        /* Centra verticalmente */
+    height: 100vh;             /* Ajusta la altura del contenedor principal */
+    background-color: #f0f0f0; /* Color de fondo opcional */
+}
+
+.contenedor_resultado {
+    margin: 0;
     display: flex; /* Utiliza flexbox para facilitar la alineación */
     flex-direction: column; /* Alinea los elementos en una columna */
     justify-content: center; /* Centra verticalmente */
     align-items: center; /* Centra horizontalmente */
-    height: 100vh; /* Establece la altura del contenedor en el 100% de la ventana */
-}
-
-.contenedor_resultado {
-    /* Opcional: Establece un ancho y alto para el contenedor de imagen */
-    max-width: 80%; /* Ancho máximo del contenedor */
-    margin: 0 auto; /* Centra horizontalmente si el ancho es menor que el contenedor padre */
+    height: 80%; /* Establece la altura del contenedor en el 100% de la ventana */
+    width: 90%;
+    background: var(--gris);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .contenedor_resultado img {
@@ -47,8 +55,8 @@ body {
     height: auto; /* Mantiene la relación de aspecto */
 }
 
-
 .btn-imprimir {
+    margin-top: 1.5rem;
     border-width: 0;
     font-size: 17px;
     padding: 10px; /* Ajusté el padding para mayor altura del botón */
