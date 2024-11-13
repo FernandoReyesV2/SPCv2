@@ -27,40 +27,65 @@ function handleImageUpload(event) {
     reader.readAsDataURL(file);
 }
 
+// Función para convertir la imagen a escala de grises y ajustar el contraste
+function preprocessImage(image) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    ctx.drawImage(image, 0, 0, image.width, image.height);
+
+    // Obtener los datos de la imagen
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    // Convertir a escala de grises y ajustar el contraste
+    for (let i = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        const contrast = 1.5; // Ajusta este valor según sea necesario
+        const newValue = (avg - 128) * contrast + 128;
+        data[i] = data[i + 1] = data[i + 2] = newValue; // Escala de grises
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    return canvas.toDataURL();
+}
+
 // Función para reconocer números
 function reconocerNumeros() {
-    const fileInput = document.getElementById('file-upload');
+    const image = document.getElementById('uploaded-image');
 
-    // Asegúrate de que hay un archivo cargado
-    if (fileInput.files.length > 0) {
-        handleImageUpload({ target: { files: [fileInput.files[0]] } });
+    // Asegúrate de que la imagen esté visible
+    if (image.style.display !== 'none') {
+        const preprocessedImageSrc = preprocessImage(image);
 
         // Lógica de reconocimiento de números
-        const processedImageSrc = fileInput.files[0]; // Se debe asegurar que esto apunte a la imagen procesada
         Tesseract.recognize(
-            processedImageSrc,
-            'eng',
+            preprocessedImageSrc,
+            'eng+spa', // Reconocer en inglés y español
             {
                 logger: info => console.log(info),
-                tessedit_pageseg_mode: Tesseract.PSM.SINGLE_BLOCK
+                tessedit_pageseg_mode: Tesseract.PSM.SINGLE_LINE // Prueba con diferentes modos
             }
         ).then(({ data: { text } }) => {
             console.log('Texto reconocido:', text);
-            const recognizedNumbers = text.match(/\d+/g);
-            if (recognizedNumbers) {
+
+            // Extraer solo los números, incluyendo decimales
+            const recognizedNumbers = text.match(/\d+(\.\d+)?/g);
+            if (recognizedNumbers && recognizedNumbers.length > 0) {
                 document.getElementById('anchura').value = recognizedNumbers[0] || '';
                 document.getElementById('altura').value = recognizedNumbers[1] || '';
             } else {
                 document.getElementById('anchura').value = '';
                 document.getElementById('altura').value = '';
+                alert('No se encontraron medidas. Por favor, ingrese las medidas manualmente.');
             }
         }).catch(error => {
-            console.error('Error al reconocer la imagen:', error);
+            console.error('Error al reconocer la imagen', error);
         });
     } else {
-        alert('Por favor, selecciona una imagen primero.');
+        alert('Por favor, sube una imagen primero.');
     }
 }
-
 // Asignar eventos a los botones
 document.getElementById('reconocer-numeros').addEventListener('click', reconocerNumeros);

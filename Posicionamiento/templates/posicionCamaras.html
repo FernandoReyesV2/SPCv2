@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>SPC</title>
     <link rel="stylesheet" href="{% static 'posicionCamaras.css' %}">
-
+    {% csrf_token %}
 </head>
 <body class="contenedor-principal">
 <!-- Navbar -->
@@ -18,43 +18,79 @@
 <div class="contenedor_resultado">
     <img src="{{ image_path }}" alt="Posición de Cámaras">
     <button onclick="imprimirImagen()" class="btn-imprimir">Imprimir Imagen</button>
+    {% if user.is_authenticated %}
+        <button onclick="guardarImagen()" class="btn-guardar">Guardar Imagen</button>
+    {% endif %}
 </div>
 
 </body>
-    <script>
-        function imprimirImagen() {
-            // Obtén la URL de la imagen
-            var imagenUrl = document.querySelector('.contenedor_resultado img').src;
+<script>
+ function guardarImagen() {
+        var imagenUrl = document.querySelector('.contenedor_resultado img').src;
+        
+        fetch('{% url "guardar_imagen" %}', {  // Usar la URL nombrada de Django
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'imagen_url': imagenUrl
+            })
+        })
+        // ... resto del código ...
+    }
 
-            // Crea un nuevo elemento <canvas>
-            var canvas = document.createElement('canvas');
-            var context = canvas.getContext('2d');
-
-            // Crea una nueva imagen
-            var img = new Image();
-            img.src = imagenUrl;
-
-            // Cuando la imagen se carga, dibuja en el canvas y llama a imprimir
-            img.onload = function() {
-                // Ajusta el tamaño del canvas al tamaño de la imagen
-                canvas.width = img.width;
-                canvas.height = img.height;
-                context.drawImage(img, 0, 0);
-
-                // Imprime el canvas
-                var dataUrl = canvas.toDataURL();
-                var windowPrint = window.open('', '_blank');
-                windowPrint.document.write('<html><head><title>Imprimir Imagen</title></head><body>');
-                windowPrint.document.write('<img src="' + dataUrl + '" style="max-width: 100%;">');
-                windowPrint.document.write('</body></html>');
-                windowPrint.document.close();
-
-                windowPrint.addEventListener('load', function() {
-                    windowPrint.print();
-                    windowPrint.close(); // Cierra la ventana después de imprimir
-                });
-            };
+    // Función auxiliar para obtener el token CSRF
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
         }
-    </script>
+        return cookieValue;
+    }
+</script>
+<script>
+    function imprimirImagen() {
+        // Obtén la URL de la imagen
+        var imagenUrl = document.querySelector('.contenedor_resultado img').src;
+
+        // Crea un nuevo elemento <canvas>
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+
+        // Crea una nueva imagen
+        var img = new Image();
+        img.src = imagenUrl;
+
+        // Cuando la imagen se carga, dibuja en el canvas y llama a imprimir
+        img.onload = function() {
+            // Ajusta el tamaño del canvas al tamaño de la imagen
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0);
+
+            // Imprime el canvas
+            var dataUrl = canvas.toDataURL();
+            var windowPrint = window.open('', '_blank');
+            windowPrint.document.write('<html><head><title>Imprimir Imagen</title></head><body>');
+            windowPrint.document.write('<img src="' + dataUrl + '" style="max-width: 100%;">');
+            windowPrint.document.write('</body></html>');
+            windowPrint.document.close();
+
+            windowPrint.addEventListener('load', function() {
+                windowPrint.print();
+                windowPrint.close(); // Cierra la ventana después de imprimir
+            });
+        };
+    }
+</script>
 
 </html>

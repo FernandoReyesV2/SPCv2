@@ -72,3 +72,17 @@ body {
     background-color: var(--naranja-oscuro); /* Asegúrate de definir var(--naranja-oscuro) */
     border-color: var(--naranja-oscuro);
 }
+
+.btn-guardar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.btn-guardar:hover {
+    background-color: #45a049;
+}

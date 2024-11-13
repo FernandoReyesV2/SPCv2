@@ -93,7 +93,7 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
     // MANEJAR EL ENVIO DE LOS DATOS DE LAS CAMARAS SELECCIONADAS
     document.getElementById('siguiente').addEventListener('click', () => {
         // Agregar console.log para ver la colección de ángulos
-        console.log('Colección de ángulos de visión:', angulosVisiones);
+        // console.log('Colección de ángulos de visión:', angulosVisiones);
 
         const angulosString = angulosVisiones.join(',');
 

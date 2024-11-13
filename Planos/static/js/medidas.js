@@ -6,13 +6,13 @@ document.getElementById('siguiente').addEventListener('click', function () {
     const habitacionValue = habitacion.value;
 
     // Validaciones
-    if (!altura || altura.trim() === '') {
-        alert('Por favor, ingresa una altura válida.');
+    if (!altura || altura.trim() === '' || altura < 0 || altura > 100) {
+        alert('Por favor, ingresa una altura válida (entre 0 y 100).');
         return; // Detiene la ejecución si la validación falla
     }
 
-    if (!anchura || anchura.trim() === '') {
-        alert('Por favor, ingresa una anchura válida.');
+    if (!anchura || anchura.trim() === '' || anchura < 0 || anchura > 100) {
+        alert('Por favor, ingresa una anchura válida (entre 0 y 100).');
         return; // Detiene la ejecución si la validación falla
     }
 

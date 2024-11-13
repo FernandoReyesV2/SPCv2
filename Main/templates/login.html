@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="POST" id="loginForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Usuario:</label>
+                <input type="text" name="username" id="username" required 
+                       class="{% if form.username.errors %}error{% endif %}">
+                {% if form.username.errors %}
+                    <span class="error-text visible">{{ form.username.errors.0 }}</span>
+                {% endif %}
+                <span class="error-text" id="username-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" id="password" required
+                       class="{% if form.password.errors %}error{% endif %}">
+                {% if form.password.errors %}
+                    <span class="error-text visible">{{ form.password.errors.0 }}</span>
+                {% endif %}
+                <span class="error-text" id="password-error"></span>
+            </div>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <a class="register-link" href="{% url 'register' %}">¿No tienes una cuenta? Regístrate</a>
+    </div>
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>

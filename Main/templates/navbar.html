@@ -20,6 +20,12 @@
         <div class="navbar-right">
             <li><a href="{% url 'home' %}#about">About</a></li>
             <li><a href="{% url 'home' %}#contact">Contact</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'mis_planos' %}">Mis Planos</a></li> <!-- Nuevo apartado -->
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
         </div>
     </ul>
 </nav>

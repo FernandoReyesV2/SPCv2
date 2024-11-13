@@ -1,8 +1,7 @@
-# Planos/urls.py
-
 from django.urls import path
-from .views import posicionCamaras
+from . import views  # Cambia la importación
 
 urlpatterns = [
-    path('', posicionCamaras, name='posicionCamaras'),  # La URL raíz de la aplicación Camaras
+    path('', views.posicionCamaras, name='posicionCamaras'),
+    path('guardar-imagen/', views.guardar_imagen, name='guardar_imagen'),
 ]

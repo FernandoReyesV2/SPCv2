@@ -6,12 +6,17 @@ from django.conf import settings
 from datetime import datetime
 import matplotlib.image as mpimg
 from urllib.parse import unquote
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
+import json
+from .models import ImagenGuardada
 
 def posicionCamaras(request):
     habitacion = unquote(request.GET.get('habitacion'))
     angulos = request.GET.get('angulos', 'No especificado')
-    altura = int(request.GET.get('altura', 0))  # Convertir a entero
-    anchura = int(request.GET.get('anchura', 0))  # Convertir a entero
+    altura = float(request.GET.get('altura', 0))  # Convertir a entero
+    anchura = float(request.GET.get('anchura', 0))  # Convertir a entero
 
     # Construcción de la URL de la imagen
     habitacion_image_url = os.path.join('Planos\static\images\habitaciones', f'{habitacion}.png')
@@ -150,3 +155,37 @@ def Calcular(vertice, angulo, contador, color, medidas):
 
     # Posicion de las camaras
     plt.scatter(vertice[0], vertice[1], color='black', marker='o')
+
+@require_POST
+@login_required
+def guardar_imagen(request):
+    try:
+        data = json.loads(request.body)
+        imagen_url = data.get('imagen_url')
+        
+        if not imagen_url:
+            return JsonResponse({
+                'success': False, 
+                'error': 'No se proporcionó URL de imagen'
+            })
+            
+        ImagenGuardada.objects.create(
+            usuario=request.user,
+            imagen_url=imagen_url
+        )
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Imagen guardada correctamente'
+        })
+        
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False, 
+            'error': 'Error en el formato JSON'
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False, 
+            'error': f'Error inesperado: {str(e)}'
+        })
