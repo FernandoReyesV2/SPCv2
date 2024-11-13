@@ -17,45 +17,68 @@
 {#RESTO DEL BODY#}
 <div class="contenedor_resultado">
     <img src="{{ image_path }}" alt="Posición de Cámaras">
-    <button onclick="imprimirImagen()" class="btn-imprimir">Imprimir Imagen</button>
-    {% if user.is_authenticated %}
-        <button onclick="guardarImagen()" class="btn-guardar">Guardar Imagen</button>
-    {% endif %}
+    <div class="contenedor_botones">
+        <button onclick="imprimirImagen()" class="btn-imprimir">Imprimir Imagen</button>
+        {% if user.is_authenticated %}
+            <button onclick="guardarImagen()" class="btn-guardar">Guardar Imagen</button>
+        {% endif %}
+        <button onclick="window.location.href='/factura'" class="btn-comprar">Comprar</button>
+    </div>
 </div>
 
+<!-- Corregir la estructura del overlay y loader -->
+<div id="overlay" class="overlay hidden">
+    <div class="loader"></div>
+</div>
+
+<div id="mensaje-exito" class="mensaje-exito hidden">
+    <div class="mensaje-contenido">
+        <h3>¡Guardado con éxito!</h3>
+    </div>
+</div>
+<script src="{% static 'js/carga.js' %}"></script>
 </body>
 <script>
- function guardarImagen() {
-        var imagenUrl = document.querySelector('.contenedor_resultado img').src;
-        
-        fetch('{% url "guardar_imagen" %}', {  // Usar la URL nombrada de Django
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': getCookie('csrftoken'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'imagen_url': imagenUrl
-            })
+    function guardarImagen() {
+    // Mostrar overlay y loader
+    document.getElementById('overlay').classList.remove('hidden');
+    
+    var imagenUrl = document.querySelector('.contenedor_resultado img').src;
+    
+    fetch('{% url "guardar_imagen" %}', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'imagen_url': imagenUrl
         })
-        // ... resto del código ...
-    }
-
-    // Función auxiliar para obtener el token CSRF
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
         }
-        return cookieValue;
-    }
+        return response.json();
+    })
+    .then(data => {
+        // Ocultar loader
+        document.getElementById('overlay').classList.add('hidden');
+        
+        // Mostrar mensaje de éxito
+        document.getElementById('mensaje-exito').classList.remove('hidden');
+        
+        // Ocultar el mensaje de éxito después de 2 segundos
+        setTimeout(() => {
+            document.getElementById('mensaje-exito').classList.add('hidden');
+        }, 2000);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('overlay').classList.add('hidden');
+        alert('Hubo un error al guardar la imagen');
+    });
+}
 </script>
 <script>
     function imprimirImagen() {

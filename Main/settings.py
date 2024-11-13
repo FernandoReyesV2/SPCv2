@@ -127,7 +127,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'Camaras' / 'static',
     BASE_DIR / 'Planos' / 'static',
     BASE_DIR / 'Posicionamiento' / 'static',
-
 ]
 
 

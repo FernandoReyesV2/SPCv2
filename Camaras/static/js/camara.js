@@ -37,68 +37,124 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-// MANEJAR EL SELECTOR Y CONTADOR DE LAS CAMARAS
+    // MANEJAR EL SELECTOR Y CONTADOR DE LAS CAMARAS
     const camarasSeleccionadas = {};
-    const angulosVisiones = []; // Array para almacenar los ángulos de visión
+    const angulosVisiones = []; 
+    let infoCarrito = JSON.parse(localStorage.getItem('carrito') || '[]');
 
-    // Agregar evento a los botones de agregar y eliminar
+    console.log('Carrito inicial:', infoCarrito);
+
+    // Función para actualizar el carrito
+    function actualizarCarrito(camaraId, cantidad) {
+        console.log('Entrando a actualizarCarrito:', { camaraId, cantidad });
+        
+        const camaraElemento = document.querySelector(`.imagen-camara[data-id="${camaraId}"]`);
+        if (!camaraElemento) {
+            console.error('No se encontró el elemento de la cámara');
+            return;
+        }
+
+        try {
+            const existingIndex = infoCarrito.findIndex(item => item.id === camaraId);
+            console.log('Índice existente:', existingIndex);
+            
+            if (cantidad > 0) {
+                const infoCamara = {
+                    id: camaraId,
+                    nombre: camaraElemento.querySelector('.nombre-camara').textContent,
+                    precio: parseFloat(camaraElemento.getAttribute('data-precio')),
+                    marca: camaraElemento.getAttribute('data-marca'),
+                    resolucion: camaraElemento.getAttribute('data-resolucion'),
+                    cantidad: cantidad,
+                    imagen: camaraElemento.querySelector('img').src
+                };
+                console.log('Info cámara preparada:', infoCamara);
+
+                if (existingIndex !== -1) {
+                    infoCarrito[existingIndex] = infoCamara;
+                } else {
+                    infoCarrito.push(infoCamara);
+                }
+            } else if (existingIndex !== -1) {
+                infoCarrito.splice(existingIndex, 1);
+            }
+
+            localStorage.setItem('carrito', JSON.stringify(infoCarrito));
+            console.log('Carrito actualizado:', infoCarrito);
+        } catch (error) {
+            console.error('Error al actualizar carrito:', error);
+        }
+    }
+
+
+    // Botón agregar
     document.querySelectorAll('.btn-agregar').forEach(button => {
         button.addEventListener('click', () => {
             const camaraId = button.getAttribute('data-id');
+            console.log('Botón agregar clickeado - ID:', camaraId);
+            
             const contador = document.getElementById(`contador-${camaraId}`);
-
-            // Incrementar el contador
-            camarasSeleccionadas[camaraId] = (camarasSeleccionadas[camaraId] || 0) + 1;
-            contador.innerText = camarasSeleccionadas[camaraId];
-
-            // Obtener el ángulo de visión de la cámara seleccionada
             const camaraElemento = document.querySelector(`.imagen-camara[data-id="${camaraId}"]`);
-            if (camaraElemento) {
-                const anguloVision = camaraElemento.dataset.anguloVision; // Aquí se accede al ángulo de visión
-                angulosVisiones.push(anguloVision); // Agregar ángulo a la lista
-                console.log(`Ángulo de visión agregado para la cámara ID ${camaraId}: ${anguloVision}`);
+
+            if (!camaraElemento) {
+                console.error('No se encontró el elemento de la cámara');
+                return;
+            }
+
+            // Actualizar contador
+            camarasSeleccionadas[camaraId] = (camarasSeleccionadas[camaraId] || 0) + 1;
+            contador.textContent = camarasSeleccionadas[camaraId];
+            
+            // Actualizar ángulos
+            const anguloVision = camaraElemento.dataset.anguloVision;
+            angulosVisiones.push(anguloVision);
+            console.log(`Ángulo de visión agregado para la cámara ID ${camaraId}: ${anguloVision}`);
+            
+            // Actualizar carrito
+            actualizarCarrito(camaraId, camarasSeleccionadas[camaraId]);
+        });
+    });
+
+    // Botón eliminar
+    document.querySelectorAll('.btn-eliminar').forEach(button => {
+        button.addEventListener('click', () => {
+            const camaraId = button.getAttribute('data-id');
+            console.log('Botón eliminar clickeado - ID:', camaraId);
+            
+            if (camarasSeleccionadas[camaraId]) {
+                const camaraElemento = document.querySelector(`.imagen-camara[data-id="${camaraId}"]`);
+                const contador = document.getElementById(`contador-${camaraId}`);
+                
+                if (!camaraElemento) {
+                    console.error('No se encontró el elemento de la cámara');
+                    return;
+                }
+
+                const anguloVision = camaraElemento.dataset.anguloVision;
+                camarasSeleccionadas[camaraId] -= 1;
+
+                if (camarasSeleccionadas[camaraId] < 0) {
+                    camarasSeleccionadas[camaraId] = 0;
+                }
+
+                contador.textContent = camarasSeleccionadas[camaraId];
+                
+                // Actualizar ángulos
+                const index = angulosVisiones.indexOf(anguloVision);
+                if (index > -1) {
+                    angulosVisiones.splice(index, 1);
+                    console.log(`Ángulo de visión eliminado para la cámara ID ${camaraId}: ${anguloVision}`);
+                }
+
+                // Actualizar carrito
+                actualizarCarrito(camaraId, camarasSeleccionadas[camaraId]);
             }
         });
     });
 
-document.querySelectorAll('.btn-eliminar').forEach(button => {
-    button.addEventListener('click', () => {
-        const camaraId = button.getAttribute('data-id');
-        const contador = document.getElementById(`contador-${camaraId}`);
-
-        // Decrementar el contador si es mayor que 0
-        if (camarasSeleccionadas[camaraId]) {
-            const anguloVision = document.querySelector(`.imagen-camara[data-id="${camaraId}"]`).dataset.anguloVision;
-            camarasSeleccionadas[camaraId] -= 1;
-
-            // Asegúrate de que el contador no baje de 0
-            if (camarasSeleccionadas[camaraId] < 0) {
-                camarasSeleccionadas[camaraId] = 0; // Fija el valor a 0 si se intenta disminuir más
-            }
-
-            // Si se elimina una cámara, quitar el ángulo de visión de la lista
-            const index = angulosVisiones.indexOf(anguloVision);
-            if (index > -1) {
-                angulosVisiones.splice(index, 1);
-                console.log(`Ángulo de visión eliminado para la cámara ID ${camaraId}: ${anguloVision}`);
-            }
-
-            // Actualiza el texto del contador
-            contador.innerText = camarasSeleccionadas[camaraId];
-        }
-    });
-});
-
-
     // MANEJAR EL ENVIO DE LOS DATOS DE LAS CAMARAS SELECCIONADAS
     document.getElementById('siguiente').addEventListener('click', () => {
-        // Agregar console.log para ver la colección de ángulos
-        // console.log('Colección de ángulos de visión:', angulosVisiones);
-
         const angulosString = angulosVisiones.join(',');
-
-        // Agregar console.log para verificar la cadena que se enviará en la URL
-        console.log('Cadena de ángulos para la URL:', angulosString);
 
         // Redirigir a la siguiente vista
         if (angulosVisiones.length > 0) {
@@ -108,3 +164,5 @@ document.querySelectorAll('.btn-eliminar').forEach(button => {
         }
     });
 });
+
+console.log('Carrito inicial desde localStorage:', localStorage.getItem('carrito'));

@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from Posicionamiento.models import ImagenGuardada 
+from Camaras.models import Camara
+import json
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse 
 def home_view(request):
     return render(request, 'home.html')
 
@@ -83,3 +87,29 @@ def mis_planos_view(request):  # Cambiamos el nombre aquí
     return render(request, 'mis_planos.html', {
         'imagenes_guardadas': imagenes_guardadas
     })
+
+def factura_view(request):
+    # Aquí procesarías la información del carrito
+    facturas = []
+    total = 0
+    
+    return render(request, 'factura.html', {
+        'facturas': facturas,
+        'total': total
+    })
+
+@require_POST
+def eliminar_plano(request):
+    try:
+        data = json.loads(request.body)
+        imagen_id = data.get('imagen_id')
+        
+        # Obtén y elimina la imagen
+        imagen = ImagenGuardada.objects.get(id=imagen_id, usuario=request.user)
+        imagen.delete()
+        
+        return JsonResponse({'mensaje': 'Plano eliminado correctamente'})
+    except ImagenGuardada.DoesNotExist:
+        return JsonResponse({'error': 'Imagen no encontrada'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
