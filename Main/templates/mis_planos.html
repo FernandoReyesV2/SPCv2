@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/mis_planos.css' %}">
+
+</head>
+<body class="contenedor-principal">
+    {% include 'navbar.html' %}
+    
+    
+    <div class="contenedor-imagenes">
+        <h2>Mis Planos Guardados</h2>
+        {% if user.is_authenticated %}
+        {% if imagenes_guardadas %}
+            <div class="imagenes-guardadas">
+                {% for imagen in imagenes_guardadas %}
+                <div class="imagen-card">
+                    <img src="{{ imagen.imagen_url }}" alt="Plano guardado">
+                    <p class="fecha-guardado">Guardado el: {{ imagen.fecha_guardado|date:"d/m/Y H:i" }}</p>
+                    <div class="botones">
+                        <button onclick="descargarImagen(this)" class="btn-descargar" data-imagen-url="{{ imagen.imagen_url }}">
+                            Descargar
+                        </button>
+                        <button onclick="eliminarPlano(this)" class="btn-eliminar" data-imagen-id="{{ imagen.id }}">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No tienes planos guardados aún.</p>
+        {% endif %}
+    {% else %}
+        <p>Debes iniciar sesión para ver tus planos guardados.</p>
+    {% endif %}
+    </div>
+    <script src="{% static 'js/mis_planos.js' %}"></script>
+</body>
+</html>

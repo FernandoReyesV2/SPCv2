@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>  
+    <link rel="stylesheet" href="{% static 'css/factura.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+    <div class="container">  <!-- Cambiado de factura-container a container -->
+        <h2>Detalle de Compra</h2>
+        <table class="factura-table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Marca</th>
+                    <th>Resolución</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="items-factura">
+                <!-- Los items se cargarán aquí dinámicamente -->
+            </tbody>
+        </table>
+        <div class="total">
+            Total: $<span id="total-precio">0.00</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Cargando datos de factura...');
+            const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+            console.log('Datos del carrito recuperados:', carrito);
+            
+            const tbody = document.getElementById('items-factura');
+            let total = 0;
+
+            carrito.forEach(item => {
+                console.log('Procesando item:', item);
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="${item.imagen}" alt="${item.nombre}"></td>
+                    <td>${item.nombre}</td>
+                    <td>${item.marca}</td>
+                    <td>${item.resolucion}p</td>
+                    <td>$${item.precio.toFixed(2)}</td>
+                    <td>${item.cantidad}</td>
+                    <td>$${subtotal.toFixed(2)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('total-precio').textContent = total.toFixed(2);
+            console.log('Total calculado:', total);
+        });
+    </script>
+</body>
+</html>

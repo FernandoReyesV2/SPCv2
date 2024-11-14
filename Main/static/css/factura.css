@@ -1,0 +1,113 @@
+:root {
+    --blanco-perla: #FBFCF8;
+    --gris: #E5ECE9;
+    --naranja-oscuro: #D33A1A; /* Le faltaba el "#" en la declaración de color */
+    --texto: #3e3e3e;
+    --naranja: #ff5900;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helveticas Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #333;
+    display: flex;  /* Añadido */
+    flex-direction: column;  /* Añadido */
+    min-height: 100vh;  /* Añadido */
+}
+
+.imagen-navbar {
+    position: relative; /* Necesario para el posicionamiento absoluto */
+    height: 56px; /* Altura igual a la del navbar */
+    overflow: hidden; /* Recorta cualquier contenido que se desborde */
+}
+
+.hero {
+    position: absolute; /* Posiciona la imagen de fondo */
+    top: 0; /* Alinea la parte superior de la imagen con la parte superior del contenedor */
+    left: 50%; /* Alinea horizontalmente al centro */
+    width: 100%; /* Mantiene la proporción de la imagen */
+    height: auto; /* Mantiene la altura de la imagen según su proporción */
+}
+
+h2 {
+    color: var(--naranja);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos para la tabla */
+.factura-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.factura-table th, .factura-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9em;
+}
+
+.factura-table th {
+    background-color: var(--naranja);
+    color: white;
+}
+
+.factura-table td img {
+    border-radius: 8px;
+    width: 80px;
+    height: auto;
+}
+
+/* Ajuste del ancho de las columnas */
+.factura-table th:nth-child(1), .factura-table td:nth-child(1) {
+    width: 10%; /* Imagen */
+}
+
+.factura-table th:nth-child(2), .factura-table td:nth-child(2) {
+    width: 20%; /* Nombre/Modelo */
+}
+
+.factura-table th:nth-child(3), .factura-table td:nth-child(3) {
+    width: 15%; /* Marca */
+}
+
+.factura-table th:nth-child(4), .factura-table td:nth-child(4) {
+    width: 10%; /* Resolución */
+}
+
+.factura-table th:nth-child(5), .factura-table td:nth-child(5) {
+    width: 15%; /* Precio Unitario */
+}
+
+.factura-table th:nth-child(6), .factura-table td:nth-child(6) {
+    width: 10%; /* Cantidad */
+}
+
+.factura-table th:nth-child(7), .factura-table td:nth-child(7) {
+    width: 20%; /* Precio Total */
+}
+
+/* Estilos para el total */
+.total {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+    color: #333;
+}
+
+/* Estilo para el contenedor */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
