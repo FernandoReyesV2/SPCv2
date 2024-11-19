@@ -1,3 +1,5 @@
+localStorage.removeItem('carrito');
+
 // MANEJAR LAS CATEGORIAS Y SU FILTRADO
 document.addEventListener('DOMContentLoaded', function () {
     // Manejar cambios en los select
@@ -93,6 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const camaraId = button.getAttribute('data-id');
             console.log('Botón agregar clickeado - ID:', camaraId);
             
+            // Verificar el total de cámaras seleccionadas
+            const totalCamaras = Object.values(camarasSeleccionadas).reduce((sum, count) => sum + count, 0);
+            if (totalCamaras >= 4) {
+                alert("No puedes agregar más de 4 cámaras en total.");
+                return;
+            }
+
             const contador = document.getElementById(`contador-${camaraId}`);
             const camaraElemento = document.querySelector(`.imagen-camara[data-id="${camaraId}"]`);
 
@@ -103,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Actualizar contador
             camarasSeleccionadas[camaraId] = (camarasSeleccionadas[camaraId] || 0) + 1;
+            console.log('Camaras seleccionadas:', camarasSeleccionadas);
             contador.textContent = camarasSeleccionadas[camaraId];
             
             // Actualizar ángulos
