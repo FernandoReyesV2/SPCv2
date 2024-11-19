@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 import json
 from .models import ImagenGuardada
+from random import choice
 
 def posicionCamaras(request):
     habitacion = unquote(request.GET.get('habitacion'))
@@ -77,8 +78,12 @@ def posicionCamaras(request):
     # plt.title('Posicion Optima Cámara')
     plt.axis('equal')
 
+    numeros_disponibles = [1, 2, 3, 4]  # Lista inicial de números disponibles
+    
     for angulo, color in zip(anguloVision, sector_colors):
-        contador += 1
+        contador = choice(numeros_disponibles)  # Selecciona un número aleatorio
+        numeros_disponibles.remove(contador)    # Elimina el número usado
+        
         if contador == 1:
             if angulo > 90:
                 vertice = (medidas[0] / 2, 0)
